@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Thêm câu hỏi</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src='https://www.gstatic.com/firebasejs/5.9.2/firebase.js'></script>
+        <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: 'AIzaSyCADhyseFX4AWG5N1yocnRFkpA-hi1ekXs',
+            authDomain: 'knowledgequizapp.firebaseapp.com',
+            databaseURL: 'https://knowledgequizapp.firebaseio.com',
+            projectId: 'knowledgequizapp',
+            storageBucket: 'knowledgequizapp.appspot.com',
+            messagingSenderId: '774645176069'
+        };
+        firebase.initializeApp(config);
+        </script> 
+        <script src="js/firebaseAuth.js"></script>
+        <script src = "js/firebaseApp.js"></script>
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            $(document).ready(() => {
+                const database = firebase.database();
+                database.ref('Users/').on('value', (snapshot) => {
+                    const allUsers = snapshot.val();
+                    console.log('Users/ changed:', allUsers);
+                    if (allUsers) {
+                    $('#status').html(''); // clear the HTML
+                    $('#status').append('List of users:');
+                    Object.keys(allUsers).forEach((name) => {
+                        $('#status').append('<li>' + name + ' ' + allUsers[name].email + ' ' + allUsers[name].password + '</li>');
+                    });
+                    }
+                });
+
+                $('#allUsersButton').click(() => {
+                    database.ref('Users/').once('value', (snapshot) => {
+                    const data = snapshot.val();
+                    console.log('You received some data!', data);
+                    $('#status').html('All users: ' + Object.keys(data));
+                    });
+                });
+                
+                // $('#insertButtonCategory').click(() =>{
+                //     const name = $('#insertId').val();
+                //     database.ref('Category/' + name).set({
+                //         Image: $('#image').val(),
+                //         Name: $('#name').val(),
+                        
+                //     })
+                // })
+
+                $(document).ajaxError(() =>{
+                    $('#status').html('Error: unknown ajaxError');
+                })
+            })
+        </script>
+        <style> 
+            input[type=text] {
+                width: 200px;
+                padding: 5px 5px;
+                margin: 0px 0;
+                box-sizing: border-box;
+            }
+        </style>     
+    </head>
+<body>
+        <h3 id="google-displayName"></h3>
+        <img id="google-pic" src="" width="50px" height="50px" />
+        <p id="google-email"></p>
+        <button 
+            class="btn btn-primary"
+            id="google-signin" 
+            onclick={signInWithGoogle()}>
+            Sign In
+        </button>
+        <button 
+            class="btn btn-"
+            id="signout" 
+            onclick={signOut()}
+            style="display: none; visibility: hidden;">
+            Sign Out
+        </button>
+    <h1> <center>THÊM CÂU HỎI</center></h1>
+        <hr>
+        <br>
+        <br>
+        <div id="menu">
+            <ul>
+                <li><a href="trangchu.html">Trang chủ</a></li> 
+                <li><a >Thể loại</a>
+                    <ul class="sub-menu">
+                        <li><a href="themtheloai.html" >Thêm</a></li>
+                        <li><a href="xoatheloai.html" >Xóa</a></li>
+                    </ul>
+                </li>
+                <li><a >Câu hỏi</a>
+                    <ul class="sub-menu">
+                        <li><a href="themcauhoi.html" >Thêm</a></li>
+                        <li><a href="#" >Xóa</a></li>
+                        <li><a href="http://localhost:8080/" >Xem tất cả câu hỏi</a></li>
+                    </ul>
+                </li>
+                <li><a >Người dùng</a>
+                    <ul class="sub-menu">
+                        <li><a href="themnguoidung.html" >Thêm</a></li>
+                        <li><a href="xoanguoidung.html" >Xóa</a></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    <table style="float: left;">
+        <td> <h4>THÊM CÂU HỎI</h4></td>
+        <tr>
+            <td>Câu hỏi:</td>
+            <td><input id ="addRestaurantQ" />
+            </td>
+        </tr>
+        <tr>
+            <td>Đáp án A:</td>
+            <td><input id ="addRestaurantA" /></p></td>
+        </tr>
+        <tr>
+            <td>Đáp án B:</td>
+            <td><input id ="addRestaurantB" /></p></td>
+        </tr>
+        <tr>
+            <td>Đáp án C:</td>
+            <td><input id ="addRestaurantC" /></p></td>
+        </tr>
+        <tr>
+            <td>Đáp án D:</td>
+            <td><input id ="addRestaurantD" /></p>
+            </td>
+        </tr>
+        <tr>
+            <td>Thêm thể loại:</td>
+            <td>
+                <select id ="addCategoryId" name="CategoryId"> 
+                    <option value = "01">Marvel</option>
+                    <option value = "02">Avengers</option>
+                    <option value = "03">Sport</option>
+                    <option value = "04">Ai là triệu phú </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Có phải câu hỏi hình ảnh:</td>
+            <td>
+                <select id ="addIsImageQuestion" name="ImageQuestion"> 
+                    <option value = "true">Yes</option>
+                    <option value = "false">No</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td> Đáp án Đúng:</td>
+            <td>
+                <button class = 'btn btn-primary' onclick={addRestaurantA()}>
+                          A  
+                </button>
+                <button class = 'btn btn-primary' onclick={addRestaurantB()}>
+                          B  
+                </button>
+                <button class = 'btn btn-primary' onclick={addRestaurantC()}>
+                          C  
+                </button>
+                <button class = 'btn btn-primary' onclick={addRestaurantD()}>
+                          D  
+                </button>
+            </td>     
+        </tr>
+
+    </table>
+
+</body>
+</html>

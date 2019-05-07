@@ -1,0 +1,56 @@
+table {
+  color: rgb(0, 0, 0);
+  background-color: rgb(179, 221, 255);
+  font-size: 16px;
+  font-family: serif;
+  padding: 5px;
+  border: 5px solid white;
+  text-align: center
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: red;
+}
+ 
+/*==Style cho menu===*/
+#menu ul {
+	background: #1F568B;
+	list-style-type: none;
+	text-align: center; /*dinh dang khung*/
+}
+#menu li {
+	color: #f1f1f1;
+	display: inline-block;
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	margin-left: -5px;
+	position: relative;
+}
+#menu a {
+	text-decoration: none;
+	color: #fff;
+	display: block;
+}
+/*vung chon- */
+#menu a:hover {
+	background: #F1F1F1;
+	color: #333;
+}
+.sub-menu {
+	display: none;
+	position: absolute;
+}
+/*Đoạn #menu li:hover .sub-menu nghĩa là khi chúng ta rê chuột vào #menu li thì nó sẽ thực hiện các thay đổi cho .sub-menu.*/
+#menu li:hover .sub-menu {
+	display: block;
+}
+
+.sub-menu li {
+	display: none;
+	margin-left: 0 !important;
+}
